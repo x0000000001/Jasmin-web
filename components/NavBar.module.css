@@ -4,6 +4,16 @@
 }
 
 .navlink {
-  color: black;
-  text-decoration: dotted;
+  color: rgb(170, 170, 170);
+  text-decoration: underline dotted;
+  font-size: 18px;
+}
+
+.navlink:hover {
+  color: rgb(61, 61, 61);
+  text-decoration: none;
+}
+
+.navbar-image {
+  filter: invert(100%);
 }
