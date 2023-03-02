@@ -20,13 +20,17 @@ export default function Navbar() {
       {[
         {
           label: "what is Jasmin",
-          link: "http://localhost:3000/what_is_jasmin",
+          link: "http://localhost:3000/what-is-jasmin",
         },
         { label: "downloads", link: "http://localhost:3000/downloads" },
         { label: "examples", link: "http://localhost:3000/examples" },
         {
           label: "about",
           link: "http://localhost:3000/about",
+        },
+        {
+          label: "private space",
+          link: "http://localhost:3000/private-space",
         },
       ].map((x, i) => (
         <NavBarButton key={i} label={x.label} link={x.link}></NavBarButton>

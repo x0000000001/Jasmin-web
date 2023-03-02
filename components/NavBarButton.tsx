@@ -11,9 +11,9 @@ export default function NavBarButton({ label, link }: Props) {
 
   return (
     <div>
-      <a href={link} className={`badge badge-dark ${styles.navlink}`}>
+      <Link href={link} className={`badge badge-dark ${styles.navlink}`}>
         {label}
-      </a>
+      </Link>
     </div>
   );
 }

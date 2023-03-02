@@ -4,7 +4,7 @@ import styles from "../styles/Home.module.css";
 import "../components/JasminInterpreter";
 import JasminInterpreter from "../components/JasminInterpreter";
 
-export default function What_is_jasmin() {
+export default function WhatIsJasmin() {
   return (
     <div className={styles.container}>
       <nav>
