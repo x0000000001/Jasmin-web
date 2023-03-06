@@ -1,23 +1,20 @@
 import { supabase } from "../lib/supabaseClient";
+import { Database } from "../lib/database.types";
 
-type Props = { codes: string };
+type Props = {};
 
-export default function PrivateSpace({ codes }: Props) {
+export default function PrivateSpace({}: Props) {
+  console.log("PrivateSpace");
+
   return (
     <ul>
-      {codes.map((c) => (
+      {/* {codes.map((c) => (
         <li key={c.id}>{c.title}</li>
-      ))}
+      ))} */}
     </ul>
   );
 }
 
-export async function getServerSideProps() {
-  let { data } = await supabase.from("countries").select();
-
-  return {
-    props: {
-      countries: data,
-    },
-  };
+export async function getCodes() {
+  // return await supabase.from("codes").select();
 }
