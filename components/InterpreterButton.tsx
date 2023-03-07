@@ -1,5 +1,5 @@
 import Button from "@mui/joy/Button";
-
+  
 type Props = { name: string; onClick: () => void };
 
 export default function InterpreterButton({ name, onClick }: Props) {
