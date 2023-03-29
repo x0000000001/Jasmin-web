@@ -1,13 +1,7 @@
-import Head from "next/head";
-import Image from "next/image";
 import styles from "../styles/Home.module.css";
 import "../components/JasminInterpreter";
 import JasminInterpreter from "../components/JasminInterpreter";
-
-import { Auth } from "@supabase/auth-ui-react";
-import { ThemeSupa } from "@supabase/auth-ui-shared";
 import { useSession, useSupabaseClient } from "@supabase/auth-helpers-react";
-import Account from "../components/account";
 
 export default function Home() {
   const session = useSession();
