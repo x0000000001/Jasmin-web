@@ -9,7 +9,7 @@ import JasminInterpreter from "../components/JasminInterpreter";
 const SignedInWebPage = (session, supabase) => {
   return (
     <div>
-      <JasminInterpreter default_code="Here a Jasmin interpreter"></JasminInterpreter>
+      <JasminInterpreter default_code=""></JasminInterpreter>
     </div>
   );
 };
@@ -28,6 +28,7 @@ export default function PrivateSpace({ countries }) {
           supabaseClient={supabase}
           appearance={{ theme: ThemeSupa }}
           theme="dark"
+          providers={[]}
         />
       )}
     </div>

@@ -23,7 +23,7 @@ export default function Home() {
             <div
               className={`container ${styles.general_column} ${styles.code_column}`}
             >
-              <JasminInterpreter default_code="Here a Jasmin interpreter"></JasminInterpreter>
+              <JasminInterpreter></JasminInterpreter>
             </div>
           </div>
         </div>
