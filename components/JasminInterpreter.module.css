@@ -1,0 +1,29 @@
+.row {
+  margin: 100px;
+}
+
+.output {
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+  margin: 20px;
+  max-height: 200px;
+}
+
+.output > ul {
+  text-align: left;
+}
+
+.output > ul > li::marker {
+  content: "-    ";
+  color: rgb(177, 0, 242);
+}
+
+.box {
+  padding: 1em 1em;
+  cursor: pointer;
+}
+
+.button {
+  padding: 1em 0em;
+}

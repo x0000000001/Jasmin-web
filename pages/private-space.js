@@ -5,16 +5,54 @@ import styles from "../styles/Home.module.css";
 import { Auth } from "@supabase/auth-ui-react";
 import { ThemeSupa } from "@supabase/auth-ui-shared";
 import JasminInterpreter from "../components/JasminInterpreter";
+import CodesAccordion from "@/components/CodesAccordion";
+import { useState } from "react";
 
-const SignedInWebPage = (session, supabase) => {
+const SignedInWebPage = (publicCodes, privateCodes) => {
+  const handleLoadCode = (code) => {
+    document.getElementsByName("input")[0].value = code;
+    console.log("loaded code");
+  };
+
   return (
     <div>
-      <JasminInterpreter default_code=""></JasminInterpreter>
+      <nav></nav>
+      <div className="container-fluid text-center">
+        <div className="row align-items-start">
+          <div className="col">
+            <div
+              className={`container ${styles.general_column} ${styles.text_column}`}
+            >
+              <div className="row align-items-start">
+                <CodesAccordion
+                  title="Your codes"
+                  codes={privateCodes}
+                  handleLoadCode={handleLoadCode}
+                ></CodesAccordion>
+              </div>
+              <div className="row align-items-start">
+                <CodesAccordion
+                  title="Public codes"
+                  codes={publicCodes}
+                  handleLoadCode={handleLoadCode}
+                ></CodesAccordion>
+              </div>
+            </div>
+          </div>
+          <div className="col">
+            <div
+              className={`container ${styles.general_column} ${styles.code_column}`}
+            >
+              <JasminInterpreter isUserLoggedIn={true}></JasminInterpreter>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   );
 };
 
-export default function PrivateSpace({ countries }) {
+export default function PrivateSpace({ publicCodes, privateCodes }) {
   const session = useSession();
   const supabase = useSupabaseClient();
 
@@ -22,7 +60,7 @@ export default function PrivateSpace({ countries }) {
     <div className={styles.container}>
       <nav></nav>{" "}
       {session ? (
-        SignedInWebPage(session, supabase)
+        SignedInWebPage(publicCodes, privateCodes)
       ) : (
         <Auth
           supabaseClient={supabase}
@@ -36,11 +74,12 @@ export default function PrivateSpace({ countries }) {
 }
 
 export async function getServerSideProps() {
-  let { data } = await supabase.from("countries").select();
+  let { data } = await supabase.from("codes").select();
 
   return {
     props: {
-      countries: data,
+      publicCodes: data,
+      privateCodes: [],
     },
   };
 }

@@ -1,0 +1,19 @@
+.cardList {
+  display: flex;
+  flex-direction: column;
+  max-height: 35vh;
+  overflow-y: auto;
+  margin: 20px;
+  align-items: end;
+}
+
+.card {
+  margin: 1em 0em;
+}
+
+.title {
+  text-align: right;
+  margin-right: 40px;
+  font-size: 30px;
+  font-style: italic;
+}

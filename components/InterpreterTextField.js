@@ -1,22 +1,23 @@
 import { Textarea } from "@mui/joy";
-import Button from "@mui/joy/Button";
 
 export default function InterpreterTextField({
-  id,
+  name,
   default_code,
   disabled,
   placeHolder,
   minRows = 4,
+  maxRows = 4,
 }) {
   return (
     <Textarea
-      id={id}
+      name={name}
       color="neutral"
       disabled={disabled}
       minRows={minRows}
+      maxRows={maxRows}
       placeholder={placeHolder}
       size="md"
-      variant="outlined"
+      variant="soft"
       defaultValue={default_code}
     />
   );
