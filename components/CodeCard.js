@@ -2,17 +2,15 @@ import * as React from "react";
 import Box from "@mui/joy/Box";
 import Button from "@mui/joy/Button";
 import Card from "@mui/joy/Card";
-import IconButton from "@mui/joy/IconButton";
 import Typography from "@mui/joy/Typography";
-import BookmarkAdd from "@mui/icons-material/BookmarkAddOutlined";
 import InterpreterTextField from "./InterpreterTextField";
 import styles from "./CodesAccordion.module.css";
 
-export default function CodeCard({ name, code, owner, handleLoadCode }) {
+export default function CodeCard({ codeObj, handleLoadCode }) {
   return (
-    <Card variant="soft" sx={{ width: 700 }} className={styles.card}>
+    <Card variant="soft" sx={{ width: 800 }} className={styles.card}>
       <Typography level="h2" fontSize="md" sx={{ mb: 0.5 }} textAlign={"left"}>
-        {name}
+        {codeObj.name}
       </Typography>
       {/* <Typography level="body2">April 24 to May 02, 2021</Typography> */}
       <InterpreterTextField
@@ -20,13 +18,13 @@ export default function CodeCard({ name, code, owner, handleLoadCode }) {
         disabled={false}
         minRows={4}
         maxRows={4}
-        default_code={code}
+        default_code={codeObj.code}
       ></InterpreterTextField>
       <Box sx={{ display: "flex" }}>
         <div>
           <Typography level="body3">Owner:</Typography>
           <Typography fontSize="lg" fontWeight="lg">
-            {owner}
+            {codeObj.owner}
           </Typography>
         </div>
         <Button
@@ -35,7 +33,9 @@ export default function CodeCard({ name, code, owner, handleLoadCode }) {
           color="primary"
           aria-label="Explore Bahamas Islands"
           sx={{ ml: "auto", fontWeight: 600 }}
-          onClick={() => handleLoadCode(code)}
+          onClick={() =>
+            handleLoadCode(codeObj.code, codeObj.name, codeObj.is_public)
+          }
         >
           Load
         </Button>

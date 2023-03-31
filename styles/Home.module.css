@@ -143,3 +143,9 @@
 .jasmin_title {
   font-size: 60px;
 }
+.codes_section_title {
+  text-align: right;
+  margin-right: 40px;
+  font-size: 30px;
+  font-style: italic;
+}

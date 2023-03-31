@@ -2,13 +2,34 @@ import Script from "next/script";
 import InterpreterButton from "./InterpreterButton";
 import InterpreterTextField from "./InterpreterTextField";
 import styles from "./JasminInterpreter.module.css";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Divider from "@mui/joy/Divider";
+import Checkbox from "@mui/joy/Checkbox";
 
 export default function JasminInterpreter({
   default_code,
-  isUserLoggedIn = false,
+  viewSaveTab = false,
+  session = null,
+  supabase = null,
 }) {
+  const [privateCodes, setPrivateCode] = useState([]);
+
+  if (viewSaveTab) {
+    useEffect(() => {
+      getServerSideProps();
+    }, [session]);
+  }
+
+  const getServerSideProps = async () => {
+    const { data, error } = await supabase.from("codes").select("*");
+    if (data) setPrivateCode(data);
+  };
+
+  const isThereACodeWithName = (name) => {
+    console.log(privateCodes);
+    return privateCodes.filter((code) => code.title == name).length > 0;
+  };
+
   const cleanHtmlText = (intrinsicsText) => {
     let lines = intrinsicsText
       .replace("<ul>", "")
@@ -57,6 +78,49 @@ export default function JasminInterpreter({
     console.log("reset");
   };
 
+  const handleSave = async () => {
+    // TODO RLS on supabase for information privacy safety
+    try {
+      const code = document.getElementsByName("input")[0].value;
+      const saveName = document.getElementsByName("saveName")[0].value;
+      const is_public = document.getElementsByName("is_public")[0].checked;
+
+      if (saveName.length == 0) {
+        alert("Please enter a name for your code");
+        return;
+      }
+
+      const codeObj = {
+        title: saveName,
+        code: code,
+        user_id: session.user.id,
+        is_public: is_public,
+      };
+
+      if (isThereACodeWithName(saveName)) {
+        if (
+          !confirm(
+            "There is already a code with this name, do you want to overwrite it ?"
+          )
+        ) {
+          return;
+        } else {
+          const { error } = await supabase
+            .from("codes")
+            .update(codeObj)
+            .eq("title", saveName)
+            .eq("user_id", session.user.id);
+          if (error) throw error;
+        }
+      } else {
+        let { error } = await supabase.from("codes").upsert(codeObj);
+        if (error) throw error;
+      }
+    } catch (error) {
+      alert(error.message);
+    }
+  };
+
   let codePlaceHolder = "export\nfn add(reg u64 x, reg u64 y) -> u64 \n{   ...";
 
   let evalPlaceHolder = "eval your code here : add(1, 2) ...";
@@ -70,46 +134,73 @@ export default function JasminInterpreter({
           console.log("jasmin loaded");
         }}
       />
-
-      {isUserLoggedIn ? (
-        <div className={`row align-items-start ${styles.box}`}>
-          <div className="col">
-            <InterpreterTextField
-              name="input"
-              default_code={default_code}
-              disabled={false}
-              placeHolder={codePlaceHolder}
-              minRows={12}
-              maxRows={12}
-            ></InterpreterTextField>
-          </div>
-          <div className="col"></div>
-        </div>
-      ) : (
-        <div className={`row align-items-start ${styles.box}`}>
-          <InterpreterTextField
-            name="input"
-            default_code={default_code}
-            disabled={false}
-            placeHolder={codePlaceHolder}
-            minRows={12}
-            maxRows={12}
-          ></InterpreterTextField>
-        </div>
-      )}
-
-      <Divider />
-
       <div className={`row align-items-start ${styles.box}`}>
         <InterpreterTextField
-          name="evalinput"
-          placeHolder={evalPlaceHolder}
+          name="input"
+          default_code={default_code}
           disabled={false}
-          minRows={4}
-          maxRows={4}
+          placeHolder={codePlaceHolder}
+          minRows={12}
+          maxRows={12}
         ></InterpreterTextField>
       </div>
 
+      <Divider />
+
+      {viewSaveTab ? (
+        <div className={`row align-items-start ${styles.box}`}>
+          <div className="col">
+            <div className={`row align-items-start ${styles.box}`}>
+              <InterpreterTextField
+                name="evalinput"
+                placeHolder={evalPlaceHolder}
+                disabled={false}
+                minRows={4}
+                maxRows={4}
+              ></InterpreterTextField>
+            </div>
+          </div>
+          <div className="col">
+            <div className={`row align-items-start ${styles.box}`}>
+              <InterpreterTextField
+                name="saveName"
+                placeHolder="name your code here"
+                disabled={false}
+                minRows={1}
+                maxRows={1}
+              ></InterpreterTextField>
+            </div>
+            <div className={`row align-items-start`}>
+              <div className="col">
+                <InterpreterButton
+                  name="Save"
+                  onClick={handleSave}
+                ></InterpreterButton>
+              </div>
+              <div className="col">
+                <Checkbox
+                  label="Public"
+                  name="is_public"
+                  variant="soft"
+                  className={`${styles.button}`}
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+      ) : (
+        <div className={`row align-items-start ${styles.box}`}>
+          <div className={`row align-items-start ${styles.box}`}>
+            <InterpreterTextField
+              name="evalinput"
+              placeHolder={evalPlaceHolder}
+              disabled={false}
+              minRows={4}
+              maxRows={4}
+            ></InterpreterTextField>
+          </div>
+        </div>
+      )}
       <Divider />
 
       <div className="row align-items-start">

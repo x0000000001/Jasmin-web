@@ -1,7 +1,7 @@
 import CodeCard from "./CodeCard";
 import styles from "./CodesAccordion.module.css";
 
-export default function CodesAccordion({ title, codes, handleLoadCode }) {
+export default function CodesAccordion({ codes, handleLoadCode }) {
   const addfn = `
    export
   fn add(reg u64 a, reg u64 b) -> reg u64 {
@@ -19,17 +19,16 @@ fn print() -> reg u64 {
 }
   `;
 
+  // TODO nice scroll
+
   return (
     <div>
-      <h1 className={styles.title}>{title}</h1>
       <div className={styles.cardList}>
         {codes.map((code, i) => {
           return (
             <div key={i}>
               <CodeCard
-                name={code.title}
-                code={code.code}
-                owner={code.user_id}
+                codeObj={code}
                 handleLoadCode={handleLoadCode}
               ></CodeCard>
             </div>
