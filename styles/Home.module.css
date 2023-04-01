@@ -196,3 +196,19 @@
 .divider {
   margin: 2em 2em;
 }
+
+.row0index {
+  height: 30%;
+}
+
+.row1index {
+  height: 20%;
+}
+
+.box {
+  padding: 1em 1em;
+}
+
+.accordeon_column {
+  align-content: center;
+}
