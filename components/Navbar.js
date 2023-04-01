@@ -15,10 +15,7 @@ export default function Navbar() {
 
   return (
     <nav className={`navbar ${styles.navbar}`}>
-      <a
-        href={"http://localhost:3000/#"}
-        className={`=${styles.navlink} navbar-image`}
-      >
+      <a href={"./"} className={`=${styles.navlink} navbar-image`}>
         <Image
           src={"/images/jasmin.png"}
           alt={"logo of the jasmin language"}
@@ -30,11 +27,11 @@ export default function Navbar() {
       {[
         {
           label: "private space",
-          link: "http://localhost:3000/private-space",
+          link: "./private-space",
         },
         {
           label: "about",
-          link: "http://localhost:3000/about",
+          link: "./about",
         },
       ].map((x, i) => (
         <NavBarButton key={i} label={x.label} link={x.link}></NavBarButton>
