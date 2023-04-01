@@ -29,24 +29,17 @@ export default function Navbar() {
       </a>
       {[
         {
-          label: "what is Jasmin",
-          link: "http://localhost:3000/what-is-jasmin",
+          label: "private space",
+          link: "http://localhost:3000/private-space",
         },
-        { label: "downloads", link: "http://localhost:3000/downloads" },
-        { label: "examples", link: "http://localhost:3000/examples" },
         {
           label: "about",
           link: "http://localhost:3000/about",
-        },
-        {
-          label: "private space",
-          link: "http://localhost:3000/private-space",
         },
       ].map((x, i) => (
         <NavBarButton key={i} label={x.label} link={x.link}></NavBarButton>
       ))}
 
-      {/* TODO redesign this button*/}
       {session ? (
         <Button sx={{ mt: 1 }} onClick={handleLogOut}>
           Log out

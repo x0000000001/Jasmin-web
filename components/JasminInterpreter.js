@@ -11,23 +11,14 @@ export default function JasminInterpreter({
   viewSaveTab = false,
   session = null,
   supabase = null,
+  userData = null,
+  privateCodes = [],
+  updateNewCode = null,
+  updateDeletedCode = null,
 }) {
-  const [privateCodes, setPrivateCode] = useState([]);
-
-  if (viewSaveTab) {
-    useEffect(() => {
-      getServerSideProps();
-    }, [session]);
-  }
-
-  const getServerSideProps = async () => {
-    const { data, error } = await supabase.from("codes").select("*");
-    if (data) setPrivateCode(data);
-  };
-
-  const isThereACodeWithName = (name) => {
+  const isThereACodeWithName = (title) => {
     console.log(privateCodes);
-    return privateCodes.filter((code) => code.title == name).length > 0;
+    return privateCodes.filter((code) => code.title == title).length > 0;
   };
 
   const cleanHtmlText = (intrinsicsText) => {
@@ -90,7 +81,7 @@ export default function JasminInterpreter({
         return;
       }
 
-      const codeObj = {
+      let codeObj = {
         title: saveName,
         code: code,
         user_id: session.user.id,
@@ -115,6 +106,37 @@ export default function JasminInterpreter({
       } else {
         let { error } = await supabase.from("codes").upsert(codeObj);
         if (error) throw error;
+      }
+
+      codeObj = {
+        ...codeObj,
+        profiles: {
+          username: userData.username,
+        },
+      };
+      updateNewCode(codeObj);
+    } catch (error) {
+      alert(error.message);
+    }
+  };
+
+  const handleDelete = async () => {
+    if (!session) return;
+
+    try {
+      const saveName = document.getElementsByName("saveName")[0].value;
+
+      if (!isThereACodeWithName(saveName)) {
+        alert("There is no code with this name on the database.");
+        return;
+      } else {
+        if (confirm("This code's data will be lost forever, are you sure ?")) {
+          await supabase
+            .from("codes")
+            .delete()
+            .match({ title: saveName, user_id: session.user.id });
+          updateDeletedCode(saveName, session.user.id);
+        }
       }
     } catch (error) {
       alert(error.message);
@@ -172,12 +194,6 @@ export default function JasminInterpreter({
             </div>
             <div className={`row align-items-start`}>
               <div className="col">
-                <InterpreterButton
-                  name="Save"
-                  onClick={handleSave}
-                ></InterpreterButton>
-              </div>
-              <div className="col">
                 <Checkbox
                   label="Public"
                   name="is_public"
@@ -185,20 +201,30 @@ export default function JasminInterpreter({
                   className={`${styles.button}`}
                 />
               </div>
+              <div className="col">
+                <InterpreterButton
+                  name="Save"
+                  onClick={handleSave}
+                ></InterpreterButton>
+              </div>
+              <div className="col">
+                <InterpreterButton
+                  name="Delete"
+                  onClick={handleDelete}
+                ></InterpreterButton>
+              </div>
             </div>
           </div>
         </div>
       ) : (
         <div className={`row align-items-start ${styles.box}`}>
-          <div className={`row align-items-start ${styles.box}`}>
-            <InterpreterTextField
-              name="evalinput"
-              placeHolder={evalPlaceHolder}
-              disabled={false}
-              minRows={4}
-              maxRows={4}
-            ></InterpreterTextField>
-          </div>
+          <InterpreterTextField
+            name="evalinput"
+            placeHolder={evalPlaceHolder}
+            disabled={false}
+            minRows={4}
+            maxRows={4}
+          ></InterpreterTextField>
         </div>
       )}
       <Divider />

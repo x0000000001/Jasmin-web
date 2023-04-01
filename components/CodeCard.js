@@ -8,9 +8,9 @@ import styles from "./CodesAccordion.module.css";
 
 export default function CodeCard({ codeObj, handleLoadCode }) {
   return (
-    <Card variant="soft" sx={{ width: 800 }} className={styles.card}>
+    <Card variant="soft" sx={{ width: 800 }} className={`${styles.card}`}>
       <Typography level="h2" fontSize="md" sx={{ mb: 0.5 }} textAlign={"left"}>
-        {codeObj.name}
+        {codeObj.title}
       </Typography>
       {/* <Typography level="body2">April 24 to May 02, 2021</Typography> */}
       <InterpreterTextField
@@ -24,7 +24,7 @@ export default function CodeCard({ codeObj, handleLoadCode }) {
         <div>
           <Typography level="body3">Owner:</Typography>
           <Typography fontSize="lg" fontWeight="lg">
-            {codeObj.owner}
+            {codeObj.profiles.username}
           </Typography>
         </div>
         <Button
@@ -33,9 +33,7 @@ export default function CodeCard({ codeObj, handleLoadCode }) {
           color="primary"
           aria-label="Explore Bahamas Islands"
           sx={{ ml: "auto", fontWeight: 600 }}
-          onClick={() =>
-            handleLoadCode(codeObj.code, codeObj.name, codeObj.is_public)
-          }
+          onClick={() => handleLoadCode(codeObj)}
         >
           Load
         </Button>

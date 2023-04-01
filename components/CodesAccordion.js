@@ -19,11 +19,9 @@ fn print() -> reg u64 {
 }
   `;
 
-  // TODO nice scroll
-
   return (
     <div>
-      <div className={styles.cardList}>
+      <div className={`${styles.cardList} ${styles.scrollbar_cool}`}>
         {codes.map((code, i) => {
           return (
             <div key={i}>

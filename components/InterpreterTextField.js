@@ -1,4 +1,5 @@
 import { Textarea } from "@mui/joy";
+import styles from "./CodesAccordion.module.css";
 
 export default function InterpreterTextField({
   name,
@@ -10,7 +11,7 @@ export default function InterpreterTextField({
 }) {
   return (
     <Textarea
-      name={name}
+      name={`${name}`}
       color="neutral"
       disabled={disabled}
       minRows={minRows}
