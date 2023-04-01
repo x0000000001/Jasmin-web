@@ -16,18 +16,16 @@ export default function JasminInterpreter({
   updateDeletedCode = null,
 }) {
   const isThereACodeWithName = (title) => {
-    console.log(privateCodes);
     return privateCodes.filter((code) => code.title == title).length > 0;
   };
 
   const cleanHtmlText = (intrinsicsText) => {
     let lines = intrinsicsText
-      .replace("<ul>", "")
-      .replace("</ul>", "")
+      .replaceAll("</li>", "")
+      .replaceAll("<ul>", "")
+      .replaceAll("</ul>", "")
       .split("<li>")
       .join("\n")
-      // FIXME it doesn't remove </li>... why ?
-      .replace("</li>", "")
       .split("\n");
     let cleanLines = lines.filter((line) => {
       return line.length > 0;
@@ -46,26 +44,23 @@ export default function JasminInterpreter({
     let intrinsicsText = cleanHtmlText(jasmini.intrinsics(true));
     let output = document.getElementsByName("output")[0];
     output.value = intrinsicsText;
-    console.log("intrinsics");
   };
 
   const handleLoad = () => {
     let codeField = document.getElementsByName("input")[0];
     let result = jasmini.load(codeField.value);
-    console.log("loaded functions");
     document.getElementsByName("output")[0].value = result;
   };
 
   const handleCT = () => {
     let result = jasmini.checkCT();
-    console.log("checked CT");
-    document.getElementsByName("output")[0].value = result.sigs;
+    let text = cleanHtmlText(result.sigs.c);
+    document.getElementsByName("output")[0].value = text;
   };
 
   const handleReset = () => {
     document.getElementsByName("output")[0].value = "";
     jasmini.clear();
-    console.log("reset");
   };
 
   const handleSave = async () => {

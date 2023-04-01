@@ -1,14 +1,17 @@
 .cardList {
   display: flex;
+  width: 100%;
   flex-direction: column;
-  max-height: 70vh;
+  max-height: 60vh;
   overflow-y: auto;
   margin: 20px;
-  align-items: end;
+  align-content: center;
+  padding: 0 1em;
 }
 
 .card {
-  margin: 1em 0em;
+  margin: 1em 0;
+  width: 100%;
 }
 
 .scrollbar_cool::-webkit-scrollbar-track {

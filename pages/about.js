@@ -64,7 +64,7 @@ export default function About() {
         >
           Mines Nancy
         </a>
-        , and this is the result of a web project. <br />
+        , and this is the result of a web project for my school. <br />
         If you want to know more about my cool projects, check out my{" "}
         <a
           href="https://github.com/Antoine-Toussaint"
@@ -73,7 +73,21 @@ export default function About() {
         >
           github
         </a>{" "}
-        !
+        .
+        <div className={`${styles.divider}`}>
+          <Divider />
+        </div>
+        <div className={styles.about_title}>Credits</div>
+        <br />
+        Thank you{" "}
+        <a
+          href="https://members.loria.fr/VLaporte/"
+          target="_blank"
+          rel="noreferrer"
+        >
+          Vincent Laporte
+        </a>{" "}
+        for the Jasmin JavaScript interface !
       </div>
     </div>
   );

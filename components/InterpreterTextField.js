@@ -1,5 +1,4 @@
 import { Textarea } from "@mui/joy";
-import styles from "./CodesAccordion.module.css";
 
 export default function InterpreterTextField({
   name,

@@ -1,5 +1,4 @@
 import { useSession, useSupabaseClient } from "@supabase/auth-helpers-react";
-import styles from "../styles/Home.module.css";
 import { Auth } from "@supabase/auth-ui-react";
 import { ThemeSupa } from "@supabase/auth-ui-shared";
 import JasminInterpreter from "../components/JasminInterpreter";
@@ -11,6 +10,7 @@ import TabPanel from "@mui/joy/TabPanel";
 import { useEffect, useState } from "react";
 import InterpreterTextField from "@/components/InterpreterTextField";
 import InterpreterButton from "@/components/InterpreterButton";
+import styles from "../styles/Home.module.css";
 
 export default function PrivateSpace() {
   const session = useSession();
@@ -72,7 +72,6 @@ export default function PrivateSpace() {
     let index = newPrivateCodes.findIndex(
       (code) => code.user_id == codeObj.user_id && code.title == codeObj.title
     );
-    console.log(index);
     if (index != -1) {
       newPrivateCodes[index] = codeObj;
     } else {
@@ -120,7 +119,6 @@ export default function PrivateSpace() {
     document.getElementsByName("input")[0].value = codeObj.code;
     document.getElementsByName("saveName")[0].value = codeObj.title;
     document.getElementsByName("is_public")[0].checked = codeObj.is_public;
-    console.log("loaded code");
   };
 
   const handleChangeName = () => {
@@ -150,7 +148,7 @@ export default function PrivateSpace() {
             <div className="row align-items-start">
               <div className="col">
                 <div className="row align-items-start">
-                  <div className="col">
+                  <div className={`col ${styles.box}`}>
                     <InterpreterTextField
                       name="username_field"
                       default_code={userNameFieldString}
@@ -167,7 +165,9 @@ export default function PrivateSpace() {
                   </div>
                 </div>
                 <div className="row align-items-start">
-                  <div className={`container ${styles.general_column}`}>
+                  <div
+                    className={`container ${styles.general_column} ${styles.accordeon_column}`}
+                  >
                     <Tabs
                       defaultValue={0}
                       aria-label="Basic tabs"
@@ -190,13 +190,13 @@ export default function PrivateSpace() {
                         <CodesAccordion
                           codes={privateCodes}
                           handleLoadCode={handleLoadCode}
-                        ></CodesAccordion>
+                        />
                       </TabPanel>
                       <TabPanel value={1} sx={{ p: 2 }}>
                         <CodesAccordion
                           codes={publicCodes}
                           handleLoadCode={handleLoadCode}
-                        ></CodesAccordion>
+                        />
                       </TabPanel>
                     </Tabs>
                   </div>

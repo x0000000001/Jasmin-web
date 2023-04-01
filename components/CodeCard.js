@@ -8,7 +8,8 @@ import styles from "./CodesAccordion.module.css";
 
 export default function CodeCard({ codeObj, handleLoadCode }) {
   return (
-    <Card variant="soft" sx={{ width: 800 }} className={`${styles.card}`}>
+    <Card variant="soft" sx={{ display: "flex" }} className={`${styles.card}`}>
+      {/* sx={{ width: 800 }} */}
       <Typography level="h2" fontSize="md" sx={{ mb: 0.5 }} textAlign={"left"}>
         {codeObj.title}
       </Typography>
