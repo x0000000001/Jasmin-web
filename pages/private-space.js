@@ -150,17 +150,21 @@ export default function PrivateSpace() {
             <div className="row align-items-start">
               <div className="col">
                 <div className="row align-items-start">
-                  <InterpreterTextField
-                    name="username_field"
-                    default_code={userNameFieldString}
-                    disabled={false}
-                    minRows={1}
-                    maxRows={11}
-                  ></InterpreterTextField>
-                  <InterpreterButton
-                    name="Change username"
-                    onClick={handleChangeName}
-                  ></InterpreterButton>
+                  <div className="col">
+                    <InterpreterTextField
+                      name="username_field"
+                      default_code={userNameFieldString}
+                      disabled={false}
+                      minRows={1}
+                      maxRows={11}
+                    ></InterpreterTextField>
+                  </div>
+                  <div className="col">
+                    <InterpreterButton
+                      name="Change username"
+                      onClick={handleChangeName}
+                    ></InterpreterButton>
+                  </div>
                 </div>
                 <div className="row align-items-start">
                   <div className={`container ${styles.general_column}`}>

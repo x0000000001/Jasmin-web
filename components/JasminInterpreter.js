@@ -171,15 +171,13 @@ export default function JasminInterpreter({
       {viewSaveTab ? (
         <div className={`row align-items-start ${styles.box}`}>
           <div className="col">
-            <div className={`row align-items-start ${styles.box}`}>
-              <InterpreterTextField
-                name="evalinput"
-                placeHolder={evalPlaceHolder}
-                disabled={false}
-                minRows={4}
-                maxRows={4}
-              ></InterpreterTextField>
-            </div>
+            <InterpreterTextField
+              name="evalinput"
+              placeHolder={evalPlaceHolder}
+              disabled={false}
+              minRows={4}
+              maxRows={4}
+            ></InterpreterTextField>
           </div>
           <div className="col">
             <div className={`row align-items-start ${styles.box}`}>
