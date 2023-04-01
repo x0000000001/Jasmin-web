@@ -2,7 +2,6 @@ import Script from "next/script";
 import InterpreterButton from "./InterpreterButton";
 import InterpreterTextField from "./InterpreterTextField";
 import styles from "./JasminInterpreter.module.css";
-import { useEffect, useState } from "react";
 import Divider from "@mui/joy/Divider";
 import Checkbox from "@mui/joy/Checkbox";
 

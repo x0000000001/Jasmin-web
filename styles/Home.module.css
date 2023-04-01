@@ -143,9 +143,56 @@
 .jasmin_title {
   font-size: 60px;
 }
+
+.jasmin_subtitle {
+  font-size: 30px;
+  font-style: italic;
+}
+
 .codes_section_title {
   text-align: right;
   margin-right: 40px;
   font-size: 30px;
   font-style: italic;
+}
+
+.hlink {
+  color: #000;
+  position: relative;
+  text-decoration: none;
+  font-size: 25px;
+  font-style: italic;
+}
+
+.hlink:hover {
+  color: #000;
+}
+
+.hlink::before {
+  background: hsla(0, 0%, 43%, 0.521);
+  content: "";
+  inset: 0;
+  position: absolute;
+  transform: scaleX(0);
+  transform-origin: right;
+  transition: transform 0.5s ease-in-out;
+  z-index: -1;
+}
+
+.hlink:hover::before {
+  transform: scaleX(1);
+  transform-origin: left;
+}
+
+.about_container {
+  padding: 2em 2em;
+}
+
+.about_title {
+  font-size: 30px;
+  font-weight: bold;
+}
+
+.divider {
+  margin: 2em 2em;
 }

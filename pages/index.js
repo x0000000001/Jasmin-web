@@ -1,12 +1,8 @@
 import styles from "../styles/Home.module.css";
 import "../components/JasminInterpreter";
 import JasminInterpreter from "../components/JasminInterpreter";
-import { useSession, useSupabaseClient } from "@supabase/auth-helpers-react";
 
 export default function Home() {
-  const session = useSession();
-  const supabase = useSupabaseClient();
-
   return (
     <div className={styles.container}>
       <nav></nav>{" "}
@@ -17,13 +13,18 @@ export default function Home() {
               className={`container ${styles.general_column} ${styles.text_column}`}
             >
               <div className={styles.jasmin_title}>Jasmin</div>
+              <div className={styles.jasmin_subtitle}>
+                High-<b>speed</b>, <br />
+                High-<b>assurance</b> <br />
+                cryptographic language.
+              </div>
             </div>
           </div>
           <div className="col">
             <div
               className={`container ${styles.general_column} ${styles.code_column}`}
             >
-              <JasminInterpreter></JasminInterpreter>
+              <JasminInterpreter />
             </div>
           </div>
         </div>
