@@ -9,6 +9,8 @@ import TabList from "@mui/joy/TabList";
 import Tab from "@mui/joy/Tab";
 import TabPanel from "@mui/joy/TabPanel";
 import { useEffect, useState } from "react";
+import InterpreterTextField from "@/components/InterpreterTextField";
+import InterpreterButton from "@/components/InterpreterButton";
 
 export default function PrivateSpace() {
   const session = useSession();
@@ -17,6 +19,9 @@ export default function PrivateSpace() {
   const [publicCodes, setPublicCodes] = useState([]);
   const [privateCodes, setPrivateCodes] = useState([]);
   const [userData, setUserData] = useState(null);
+  const [userNameFieldString, setUserNameFieldString] = useState(
+    userData ? userData.username : ""
+  );
 
   useEffect(() => {
     getProps();
@@ -36,6 +41,7 @@ export default function PrivateSpace() {
     }
 
     setUserData(data[0]);
+    setUserNameFieldString(data[0].username);
   };
 
   const getProps = async () => {
@@ -117,6 +123,23 @@ export default function PrivateSpace() {
     console.log("loaded code");
   };
 
+  const handleChangeName = () => {
+    let newUsername = document.getElementsByName("username_field")[0].value;
+    supabase
+      .from("profiles")
+      .update({ username: newUsername })
+      .eq("id", session.user.id)
+      .then((res) => {
+        console.log(res);
+        setUserData({ ...userData, username: newUsername });
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+
+    setUserNameFieldString(newUsername);
+  };
+
   return (
     <div className={styles.container}>
       <nav></nav>{" "}
@@ -126,38 +149,53 @@ export default function PrivateSpace() {
           <div className="container-fluid text-center">
             <div className="row align-items-start">
               <div className="col">
-                <div className={`container ${styles.general_column}`}>
-                  <Tabs
-                    defaultValue={0}
-                    aria-label="Basic tabs"
-                    sx={{ borderRadius: "lg" }}
-                  >
-                    <TabList>
-                      <Tab>
-                        <h1 className={styles.codes_section_title}>
-                          Your codes
-                        </h1>
-                      </Tab>
-                      <Tab>
-                        <h1 className={styles.codes_section_title}>
-                          Public codes
-                        </h1>
-                      </Tab>
-                    </TabList>
+                <div className="row align-items-start">
+                  <InterpreterTextField
+                    name="username_field"
+                    default_code={userNameFieldString}
+                    disabled={false}
+                    minRows={1}
+                    maxRows={11}
+                  ></InterpreterTextField>
+                  <InterpreterButton
+                    name="Change username"
+                    onClick={handleChangeName}
+                  ></InterpreterButton>
+                </div>
+                <div className="row align-items-start">
+                  <div className={`container ${styles.general_column}`}>
+                    <Tabs
+                      defaultValue={0}
+                      aria-label="Basic tabs"
+                      sx={{ borderRadius: "lg" }}
+                    >
+                      <TabList>
+                        <Tab>
+                          <h1 className={styles.codes_section_title}>
+                            Your codes
+                          </h1>
+                        </Tab>
+                        <Tab>
+                          <h1 className={styles.codes_section_title}>
+                            Public codes
+                          </h1>
+                        </Tab>
+                      </TabList>
 
-                    <TabPanel value={0} sx={{ p: 2 }}>
-                      <CodesAccordion
-                        codes={privateCodes}
-                        handleLoadCode={handleLoadCode}
-                      ></CodesAccordion>
-                    </TabPanel>
-                    <TabPanel value={1} sx={{ p: 2 }}>
-                      <CodesAccordion
-                        codes={publicCodes}
-                        handleLoadCode={handleLoadCode}
-                      ></CodesAccordion>
-                    </TabPanel>
-                  </Tabs>
+                      <TabPanel value={0} sx={{ p: 2 }}>
+                        <CodesAccordion
+                          codes={privateCodes}
+                          handleLoadCode={handleLoadCode}
+                        ></CodesAccordion>
+                      </TabPanel>
+                      <TabPanel value={1} sx={{ p: 2 }}>
+                        <CodesAccordion
+                          codes={publicCodes}
+                          handleLoadCode={handleLoadCode}
+                        ></CodesAccordion>
+                      </TabPanel>
+                    </Tabs>
+                  </div>
                 </div>
               </div>
               <div className="col">

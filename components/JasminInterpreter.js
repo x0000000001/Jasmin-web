@@ -70,7 +70,6 @@ export default function JasminInterpreter({
   };
 
   const handleSave = async () => {
-    // TODO RLS on supabase for information privacy safety
     try {
       const code = document.getElementsByName("input")[0].value;
       const saveName = document.getElementsByName("saveName")[0].value;
