@@ -13,6 +13,7 @@ Install the depedencies :
 - npm install @mui/joy @emotion/react @emotion/styled
 - npm install @supabase/supabase-js @supabase/auth-ui-react @supabase/auth-ui-shared
 - npm install @supabase/auth-helpers-nextjs
+- npm install @supabase/auth-helpers-react
 
 Run npm `npm run dev`
 
